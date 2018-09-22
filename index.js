@@ -38,17 +38,29 @@ async function getRelativePos(a, b, heading) {
     let aElev = await obstruction.getElevation(a.lat, a.lon);
     let bElev = await obstruction.getElevation(b.lat, b.lon);
 
-    let y = bElev / aElev * 5 - 2;
+    let x = Math.cos(angle) * 25;
+    let z = Math.sin(angle) * 25;
 
-    return {
-        x: Math.cos(angle) * 25,
-        z: Math.sin(angle) * 25,
-        y,
-        dist: Math.sqrt((a.lat - b.lat) * (a.lat - b.lat) + (a.lon - b.lon) * (a.lon - b.lon))
-    };
+    let y = bElev / aElev * 5 - 2;
+    let dist = Math.sqrt((a.lat - b.lat) * (a.lat - b.lat) + (a.lon - b.lon) * (a.lon - b.lon));
+
+    if (dist < 0.001) {
+        x = 0.5;
+        z = 0.5;
+        y = -0.6;
+
+        dist = 2.5;
+    }
+
+    return {x, z, y, dist};
 }
 
 app.get('/poi', function (req, res) {
+    if (!req.query.latitude || !req.query.longitude) {
+        res.status(400).send({});
+        return;
+    }
+
     getPois({
         poitype: 4,
         radius: 20000,
@@ -129,11 +141,17 @@ app.get('/poi', function (req, res) {
             return result.filter(isFar);
         })
         .then(result => {
+            console.log(result);
             res.send(result);
         });
 });
 
 app.post('/star', function (req, res) {
+    if (!req.body.latitude || !req.body.longitude) {
+        res.status(400).send({});
+        return;
+    }
+
     stars.save(req.body.latitude, req.body.longitude);
     res.send({});
 });
