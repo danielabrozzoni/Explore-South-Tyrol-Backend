@@ -143,7 +143,6 @@ app.get('/poi', function (req, res) {
             return result.filter(isFar);
         })
         .then(result => {
-            console.log(result);
             res.send(result);
         });
 });

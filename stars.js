@@ -70,7 +70,6 @@ async function addGeoPoint(lat, lon, key) {
 }
 
 async function save(lat, lon) {
-    console.log(lat, lon);
     let records = await getKeys(lat, lon);
 
     let key = null;
