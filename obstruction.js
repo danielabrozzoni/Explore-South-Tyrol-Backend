@@ -1,7 +1,9 @@
 'use strict';
 
+const path = require('path');
 const TileSet = require('node-hgt').TileSet;
-const tileset = new TileSet('/home/user/.cache/srtm/');
+
+const tileset = new TileSet(path.resolve(__dirname, './srtm'));
 
 const CONSTANT = 1000;
 

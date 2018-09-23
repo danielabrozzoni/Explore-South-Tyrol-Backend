@@ -3,7 +3,7 @@
 const redis = require('redis');
 const uuidv4 = require('uuid/v4');
 
-const client = redis.createClient();
+var client = redis.createClient(process.env.REDIS_URL);
 
 async function getKeys(lat, lon, radius = 25) {
     return new Promise((resolve, reject) => {

@@ -1,0 +1,6 @@
+{
+  "name": "Explore South Tyrol",
+  "description": "AR app to explore South Tyrol",
+  "repository": "https://github.com/imaprincess/Explore-South-Tyrol-Backend",
+  "image": "heroku/nodejs"
+}

@@ -8,6 +8,8 @@ const bodyParser = require('body-parser');
 
 const stars = require('./stars');
 
+const PORT = process.env.PORT || 3000;
+
 const app = express();
 
 // parse application/json
@@ -46,8 +48,8 @@ async function getRelativePos(a, b, heading) {
 
     if (dist < 0.001) {
         x = 0.5;
-        z = 0.5;
-        y = -0.6;
+        z = -0.5;
+        y = -1;
 
         dist = 2.5;
     }
@@ -156,6 +158,6 @@ app.post('/star', function (req, res) {
     res.send({});
 });
 
-app.listen(3000, function () {
-    console.log('Server listening on port 3000!');
+app.listen(PORT, function () {
+    console.log(`Server listening on port ${PORT}!`);
 });
